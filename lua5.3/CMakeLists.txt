@@ -33,7 +33,7 @@ ExternalProject_Add(TARGET_lua53
                     INSTALL_COMMAND ${CMAKE_MAKE_PROGRAM} install DESTDIR=${CMAKE_CURRENT_BINARY_DIR}/lua
 )
 
-
+SET(LUA53_CMAKE_PATH ${CMAKE_CURRENT_BINARY_DIR}/lua/install/cmake/ CACHE INTERNAL "The complete path to the LUA5.3 CMAKE package.")
 
 #----------------------------------------------------------------------------
 
