@@ -33,7 +33,13 @@ ExternalProject_Add(TARGET_lua51
                     INSTALL_COMMAND ${CMAKE_MAKE_PROGRAM} install DESTDIR=${CMAKE_CURRENT_BINARY_DIR}/lua
 )
 
-SET(LUA51_CMAKE_PATH ${CMAKE_CURRENT_BINARY_DIR}/lua/install/cmake/ CACHE INTERNAL "The complete path to the LUA5.1 CMAKE package.")
-
 #----------------------------------------------------------------------------
 
+SET(VERSION ${PROJECT_VERSION})
+SET(INSTALL_WIN32 build_windows32/lua5.1/lua/install)
+SET(INSTALL_WIN64 build_windows64/lua5.1/lua/install)
+CONFIGURE_FILE(
+               artifact/CMakeLists.txt
+               ${CMAKE_CURRENT_BINARY_DIR}/artifact/CMakeLists.txt
+               @ONLY
+)
