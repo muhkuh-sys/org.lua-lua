@@ -34,9 +34,3 @@ ExternalProject_Add(TARGET_lua53
 )
 
 #----------------------------------------------------------------------------
-
-CONFIGURE_FILE(
-               artifact/CMakeLists.txt
-               ${CMAKE_CURRENT_BINARY_DIR}/artifact/CMakeLists.txt
-               @ONLY
-)

@@ -34,12 +34,3 @@ ExternalProject_Add(TARGET_lua51
 )
 
 #----------------------------------------------------------------------------
-
-SET(VERSION ${PROJECT_VERSION})
-SET(INSTALL_WIN32 build_windows32/lua5.1/lua/install)
-SET(INSTALL_WIN64 build_windows64/lua5.1/lua/install)
-CONFIGURE_FILE(
-               artifact/CMakeLists.txt
-               ${CMAKE_CURRENT_BINARY_DIR}/artifact/CMakeLists.txt
-               @ONLY
-)

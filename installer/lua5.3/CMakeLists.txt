@@ -1,12 +1,15 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
-PROJECT(
-        "org.lua-lua51"
-        VERSION @VERSION@
-)
+PROJECT("org.lua-lua53-artifact")
+
+SET(INSTALL_WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/../../build_windows32/lua5.3/lua/install)
+SET(INSTALL_WIN64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build_windows64/lua5.3/lua/install)
+
+SET(org.lua-lua53_DIR ${INSTALL_WIN32}/cmake)
+FIND_PACKAGE("org.lua-lua53")
 
 SET(CPACK_INCLUDE_TOPLEVEL_DIRECTORY FALSE)
-SET(CPACK_PACKAGE_FILE_NAME lua51-@VERSION@)
+SET(CPACK_PACKAGE_FILE_NAME "lua53-${org.lua-lua53_VERSION}")
 
 SET(CPACK_GENERATOR "ZIP")
 INCLUDE(CPack)
@@ -16,20 +19,20 @@ INCLUDE(CPack)
 #
 # Install the 32bit files.
 #
-INSTALL(FILES @INSTALL_WIN32@/bin/lua5.1.exe @INSTALL_WIN32@/bin/wlua5.1.exe @INSTALL_WIN32@/bin/lua5.1.dll
+INSTALL(FILES ${INSTALL_WIN32}/bin/lua5.3.exe ${INSTALL_WIN32}/bin/wlua5.3.exe ${INSTALL_WIN32}/bin/lua5.3.dll
         DESTINATION windows_x86/bin
 )
 
-INSTALL(FILES @INSTALL_WIN32@/lib/lua5.1.dll.a
+INSTALL(FILES ${INSTALL_WIN32}/lib/lua5.3.dll.a
         DESTINATION windows_x86/lib
 )
 
-INSTALL(DIRECTORY @INSTALL_WIN32@/include
+INSTALL(DIRECTORY ${INSTALL_WIN32}/include
         DESTINATION windows_x86
         FILES_MATCHING PATTERN "*.h"
 )
 
-INSTALL(DIRECTORY @INSTALL_WIN32@/cmake
+INSTALL(DIRECTORY ${INSTALL_WIN32}/cmake
         DESTINATION windows_x86
         FILES_MATCHING PATTERN "*.cmake"
 )
@@ -39,20 +42,20 @@ INSTALL(DIRECTORY @INSTALL_WIN32@/cmake
 #
 # Install the 64bit files.
 #
-INSTALL(FILES @INSTALL_WIN64@/bin/lua5.1.exe @INSTALL_WIN64@/bin/wlua5.1.exe @INSTALL_WIN64@/bin/lua5.1.dll
+INSTALL(FILES ${INSTALL_WIN64}/bin/lua5.3.exe ${INSTALL_WIN64}/bin/wlua5.3.exe ${INSTALL_WIN64}/bin/lua5.3.dll
         DESTINATION windows_amd64/bin
 )
 
-INSTALL(FILES @INSTALL_WIN64@/lib/lua5.1.dll.a
+INSTALL(FILES ${INSTALL_WIN64}/lib/lua5.3.dll.a
         DESTINATION windows_amd64/lib
 )
 
-INSTALL(DIRECTORY @INSTALL_WIN64@/include
+INSTALL(DIRECTORY ${INSTALL_WIN64}/include
         DESTINATION windows_amd64
         FILES_MATCHING PATTERN "*.h"
 )
 
-INSTALL(DIRECTORY @INSTALL_WIN64@/cmake
+INSTALL(DIRECTORY ${INSTALL_WIN64}/cmake
         DESTINATION windows_amd64
         FILES_MATCHING PATTERN "*.cmake"
 )
@@ -62,5 +65,3 @@ INSTALL(DIRECTORY @INSTALL_WIN64@/cmake
 
 INSTALL(FILES install.lua
         DESTINATION .)
-
-
