@@ -2,14 +2,17 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
 PROJECT("org.lua-lua51-artifact")
 
+INCLUDE(../../cmake/version.cmake)
+
 SET(INSTALL_WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/../../build_windows32/lua5.1/lua/install)
 SET(INSTALL_WIN64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build_windows64/lua5.1/lua/install)
 
 SET(org.lua-lua51_DIR ${INSTALL_WIN32}/cmake)
 FIND_PACKAGE("org.lua-lua51")
+SET(PROJECT_VERSION ${org.lua-lua51_VERSION})
 
 SET(CPACK_INCLUDE_TOPLEVEL_DIRECTORY FALSE)
-SET(CPACK_PACKAGE_FILE_NAME "lua51-${org.lua-lua51_VERSION}")
+SET(CPACK_PACKAGE_FILE_NAME "lua51-${PROJECT_VERSION}")
 
 SET(CPACK_GENERATOR "ZIP")
 INCLUDE(CPack)
@@ -65,3 +68,8 @@ INSTALL(DIRECTORY ${INSTALL_WIN64}/cmake
 
 INSTALL(FILES install.lua
         DESTINATION .)
+
+
+CONFIGURE_FILE(lua51.xml
+               lua51-${PROJECT_VERSION}.xml
+               @ONLY)
