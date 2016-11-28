@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-PROJECT("org.lua-lua52")
+PROJECT("org.lua.lua-lua52")
 
 INCLUDE(ExternalProject)
 

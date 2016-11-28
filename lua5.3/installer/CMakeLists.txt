@@ -1,16 +1,17 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
-PROJECT("org.lua-lua53-artifact")
+PROJECT("org.lua.lua-lua53-artifact")
 
 INCLUDE(../../cmake/version.cmake)
 
 SET(INSTALL_WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/../../build_windows32/lua5.3/lua/install)
 SET(INSTALL_WIN64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build_windows64/lua5.3/lua/install)
 
-SET(org.lua-lua53_DIR ${INSTALL_WIN32}/cmake)
-FIND_PACKAGE("org.lua-lua53")
-SET(PROJECT_VERSION ${org.lua-lua53_VERSION})
+SET(org.lua.lua-lua53_DIR ${INSTALL_WIN32}/cmake)
+FIND_PACKAGE("org.lua.lua-lua53")
+SET(PROJECT_VERSION ${org.lua.lua-lua53_VERSION})
 
+SET(CPACK_OUTPUT_FILE_PREFIX targets/jonchki/repository/org/lua/lua/${PROJECT_VERSION})
 SET(CPACK_INCLUDE_TOPLEVEL_DIRECTORY FALSE)
 SET(CPACK_PACKAGE_FILE_NAME "lua53-${PROJECT_VERSION}")
 
@@ -71,5 +72,5 @@ INSTALL(FILES install.lua
 
 
 CONFIGURE_FILE(lua53.xml
-               lua53-${PROJECT_VERSION}.xml
+               ${CPACK_OUTPUT_FILE_PREFIX}/lua53-${PROJECT_VERSION}.xml
                @ONLY)

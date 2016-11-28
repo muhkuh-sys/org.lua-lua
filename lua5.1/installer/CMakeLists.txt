@@ -1,18 +1,19 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
-PROJECT("org.lua-lua52-artifact")
+PROJECT("org.lua.lua-lua51-artifact")
 
 INCLUDE(../../cmake/version.cmake)
 
-SET(INSTALL_WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/../../build_windows32/lua5.2/lua/install)
-SET(INSTALL_WIN64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build_windows64/lua5.2/lua/install)
+SET(INSTALL_WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/../../build_windows32/lua5.1/lua/install)
+SET(INSTALL_WIN64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build_windows64/lua5.1/lua/install)
 
-SET(org.lua-lua52_DIR ${INSTALL_WIN32}/cmake)
-FIND_PACKAGE("org.lua-lua52")
-SET(PROJECT_VERSION ${org.lua-lua52_VERSION})
+SET(org.lua.lua-lua51_DIR ${INSTALL_WIN32}/cmake)
+FIND_PACKAGE("org.lua.lua-lua51")
+SET(PROJECT_VERSION ${org.lua.lua-lua51_VERSION})
 
+SET(CPACK_OUTPUT_FILE_PREFIX targets/jonchki/repository/org/lua/lua/${PROJECT_VERSION})
 SET(CPACK_INCLUDE_TOPLEVEL_DIRECTORY FALSE)
-SET(CPACK_PACKAGE_FILE_NAME "lua52-${PROJECT_VERSION}")
+SET(CPACK_PACKAGE_FILE_NAME "lua51-${PROJECT_VERSION}")
 
 SET(CPACK_GENERATOR "ZIP")
 INCLUDE(CPack)
@@ -22,11 +23,11 @@ INCLUDE(CPack)
 #
 # Install the 32bit files.
 #
-INSTALL(FILES ${INSTALL_WIN32}/bin/lua5.2.exe ${INSTALL_WIN32}/bin/wlua5.2.exe ${INSTALL_WIN32}/bin/lua5.2.dll
+INSTALL(FILES ${INSTALL_WIN32}/bin/lua5.1.exe ${INSTALL_WIN32}/bin/wlua5.1.exe ${INSTALL_WIN32}/bin/lua5.1.dll
         DESTINATION windows_x86/bin
 )
 
-INSTALL(FILES ${INSTALL_WIN32}/lib/lua5.2.dll.a
+INSTALL(FILES ${INSTALL_WIN32}/lib/lua5.1.dll.a
         DESTINATION windows_x86/lib
 )
 
@@ -45,11 +46,11 @@ INSTALL(DIRECTORY ${INSTALL_WIN32}/cmake
 #
 # Install the 64bit files.
 #
-INSTALL(FILES ${INSTALL_WIN64}/bin/lua5.2.exe ${INSTALL_WIN64}/bin/wlua5.2.exe ${INSTALL_WIN64}/bin/lua5.2.dll
+INSTALL(FILES ${INSTALL_WIN64}/bin/lua5.1.exe ${INSTALL_WIN64}/bin/wlua5.1.exe ${INSTALL_WIN64}/bin/lua5.1.dll
         DESTINATION windows_amd64/bin
 )
 
-INSTALL(FILES ${INSTALL_WIN64}/lib/lua5.2.dll.a
+INSTALL(FILES ${INSTALL_WIN64}/lib/lua5.1.dll.a
         DESTINATION windows_amd64/lib
 )
 
@@ -70,6 +71,6 @@ INSTALL(FILES install.lua
         DESTINATION .)
 
 
-CONFIGURE_FILE(lua52.xml
-               lua52-${PROJECT_VERSION}.xml
+CONFIGURE_FILE(lua51.xml
+               ${CPACK_OUTPUT_FILE_PREFIX}/lua51-${PROJECT_VERSION}.xml
                @ONLY)
