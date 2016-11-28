@@ -10,16 +10,16 @@ docker.image('jenkins-ubuntu-1604').inside {
 	sh 'sudo apt-get --quiet --assume-yes install cmake3 icoutils imagemagick make mingw-w64-mbs'
 
 	stage 'Build Windows 32Bit'
-	sh './.build01_windows32.sh'
+	sh 'PATH=/usr/mingw-w64-i686/bin:/usr/mingw-w64-x86_64/bin:${PATH} ./.build01_windows32.sh'
 
 	stage 'Build Windows 64Bit'
-	sh './.build02_windows64.sh'
+	sh 'PATH=/usr/mingw-w64-i686/bin:/usr/mingw-w64-x86_64/bin:${PATH} ./.build02_windows64.sh'
 
 	stage 'Build Artefacts'
 	sh './.build03_artefacts.sh'
 
 	stage 'Save Artifacts'
-	archive 'targets/*.bin,targets/mmc/*/netx.rom'
+	archive 'build/org.lua.lua-lua*/targets/jonchki/**/*.xml,build/org.lua.lua-lua*/targets/jonchki/**/*.zip'
 
 	stage 'Clean after build'
 	sh 'rm -rf .[^.] .??* *'
