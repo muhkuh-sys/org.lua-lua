@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
-PROJECT("org.lua-lua")
+PROJECT("org.lua-lua5.2")
 
 #----------------------------------------------------------------------------
 #
@@ -27,8 +27,6 @@ ENDIF(${CMAKE_BUILD_TOOL} MATCHES "(msdev|VCExpress|devenv)")
 #
 
 ADD_SUBDIRECTORY(icons)
-ADD_SUBDIRECTORY(lua5.1)
 ADD_SUBDIRECTORY(lua5.2)
-ADD_SUBDIRECTORY(lua5.3)
 
 #----------------------------------------------------------------------------
