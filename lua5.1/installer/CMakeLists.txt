@@ -72,5 +72,5 @@ INSTALL(FILES install.lua
 
 
 CONFIGURE_FILE(lua51.xml
-               ${CPACK_OUTPUT_FILE_PREFIX}/lua51-${PROJECT_VERSION}.xml
+               ${CPACK_OUTPUT_FILE_PREFIX}/lua5.1-${PROJECT_VERSION}.xml
                @ONLY)
