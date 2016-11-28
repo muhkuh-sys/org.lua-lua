@@ -5,6 +5,10 @@ docker.image('jenkins-ubuntu-1604').inside {
 	stage 'Checkout'
 	checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/muhkuh-sys/org.lua-lua.git']]])
 
+	stage 'Bootstrap'
+	sh 'sudo apt-get --quiet --assume-yes update'
+	sh 'sudo apt-get --quiet --assume-yes install cmake3 icoutils imagemagick make mingw-w64-mbs'
+
 	stage 'Build Windows 32Bit'
 	sh './.build01_windows32.sh'
 
