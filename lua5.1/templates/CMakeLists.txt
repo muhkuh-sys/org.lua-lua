@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.0)
 
 # The version number is a combination of the LUA version and the packaging.
 PROJECT(
-	"org.lua.lua-lua51"
-	VERSION 5.1.5.1
+	"org.lua-lua5.1"
+	VERSION ${VERSION}
 )
 
 
