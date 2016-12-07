@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
-PROJECT("org.lua.lua-lua51-artifact")
+PROJECT("org.lua-lua5.1-artifact")
 
 INCLUDE(../../cmake/version.cmake)
 
@@ -14,11 +14,11 @@ SET(INSTALL_UBUNTU_1604_32 ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1604_3
 SET(INSTALL_UBUNTU_1604_64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1604_64)
 
 # Get the version from one of the packages.
-SET(org.lua.lua-lua51_DIR ${INSTALL_WINDOWS_32}/cmake)
-FIND_PACKAGE("org.lua.lua-lua51")
-SET(PROJECT_VERSION ${org.lua.lua-lua51_VERSION})
+SET(org.lua-lua5.1_DIR ${INSTALL_WINDOWS_32}/cmake)
+FIND_PACKAGE("org.lua-lua5.1" REQUIRED)
+SET(PROJECT_VERSION ${org.lua-lua5.1_VERSION})
 
-SET(CPACK_OUTPUT_FILE_PREFIX targets/jonchki/repository/org/lua/lua/${PROJECT_VERSION})
+SET(CPACK_OUTPUT_FILE_PREFIX targets/jonchki/repository/org/lua/lua5.1/${PROJECT_VERSION})
 SET(CPACK_INCLUDE_TOPLEVEL_DIRECTORY FALSE)
 SET(CPACK_PACKAGE_FILE_NAME "lua5.1-${PROJECT_VERSION}")
 
@@ -195,3 +195,14 @@ INSTALL(FILES install.lua
 CONFIGURE_FILE(lua51.xml
                ${CPACK_OUTPUT_FILE_PREFIX}/lua5.1-${PROJECT_VERSION}.xml
                @ONLY)
+
+
+#-----------------------------------------------------------------------------
+#
+# Filter the pom.xml file.
+#
+SET(POM_ARTIFACT_ID  "lua5.1")
+SET(POM_GROUP_ID     "org.lua")
+SET(POM_VERSION      "${PROJECT_VERSION}")
+SET(POM_PACKAGING    "zip")
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/pom.xml ${CPACK_OUTPUT_FILE_PREFIX}/pom.xml)

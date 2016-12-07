@@ -6,7 +6,7 @@ set -e
 # Build all artefacts.
 #
 pushd build
-rm -rf org.lua.lua-lua51
+rm -rf org.lua-lua5.1
 rm -rf windows_32
 rm -rf windows_64
 rm -rf ubuntu_1204_32
@@ -16,7 +16,7 @@ rm -rf ubuntu_1404_64
 rm -rf ubuntu_1604_32
 rm -rf ubuntu_1604_64
 
-mkdir org.lua.lua-lua51
+mkdir org.lua-lua5.1
 mkdir windows_32
 mkdir windows_64
 mkdir ubuntu_1204_32
@@ -36,7 +36,7 @@ tar --extract --directory ubuntu_1604_32 --file build_ubuntu_1604_32.tar.gz --gz
 tar --extract --directory ubuntu_1604_64 --file build_ubuntu_1604_64.tar.gz --gzip
 popd
 
-pushd build/org.lua.lua-lua51
+pushd build/org.lua-lua5.1
 cmake -DCMAKE_INSTALL_PREFIX="" ../../lua5.1/installer
 make
 make package
