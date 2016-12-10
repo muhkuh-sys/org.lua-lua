@@ -11,6 +11,9 @@ mkdir -p ${PRJDIR}/build
 # Start the container and get the ID.
 ID=`docker run --detach --interactive --volume ${PRJDIR}:/tmp/work mbs_ubuntu_1204 /bin/bash`
 
+# Update the package list to prevent "not found" messages.
+docker exec ${ID} bash -c 'apt-get update --assume-yes'
+
 # Install the project specific packages.
 docker exec ${ID} bash -c 'apt-get install --assume-yes imagemagick icoutils libreadline-dev lib32readline-dev'
 
