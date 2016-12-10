@@ -19,13 +19,13 @@ docker exec ${ID} bash -c 'apt-get install --assume-yes imagemagick icoutils lib
 
 # Build the 32bit version.
 docker exec ${ID} bash -c 'cd /tmp/work && bash .build03_linux32.sh'
-docker exec ${ID} bash -c 'tar --create --file /tmp/work/build/build_ubuntu_1610_32.tar.gz --gzip --directory /tmp/work/build32/lua5.1/lua/install .'
-docker exec ${ID} bash -c 'chown `stat -c %u:%g /tmp/work` /tmp/work/build/build_ubuntu_1610_32.tar.gz'
+docker exec ${ID} bash -c 'tar --create --file /tmp/work/build/build_ubuntu_1610_x86.tar.gz --gzip --directory /tmp/work/build32/lua5.1/lua/install .'
+docker exec ${ID} bash -c 'chown `stat -c %u:%g /tmp/work` /tmp/work/build/build_ubuntu_1610_x86.tar.gz'
 
 # Build the 64bit version.
 docker exec ${ID} bash -c 'cd /tmp/work && bash .build04_linux64.sh'
-docker exec ${ID} bash -c 'tar --create --file /tmp/work/build/build_ubuntu_1610_64.tar.gz --gzip --directory /tmp/work/build64/lua5.1/lua/install .'
-docker exec ${ID} bash -c 'chown `stat -c %u:%g /tmp/work` /tmp/work/build/build_ubuntu_1610_64.tar.gz'
+docker exec ${ID} bash -c 'tar --create --file /tmp/work/build/build_ubuntu_1610_x86_64.tar.gz --gzip --directory /tmp/work/build64/lua5.1/lua/install .'
+docker exec ${ID} bash -c 'chown `stat -c %u:%g /tmp/work` /tmp/work/build/build_ubuntu_1610_x86_64.tar.gz'
 
 # Stop and remove the container.
 docker stop --time 0 ${ID}
