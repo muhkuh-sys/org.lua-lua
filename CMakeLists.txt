@@ -1,6 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
-PROJECT("org.lua-lua5.3")
+PROJECT("org.lua.lua-lua5.3"
+        VERSION "5.3.3.1")
 
 #----------------------------------------------------------------------------
 #

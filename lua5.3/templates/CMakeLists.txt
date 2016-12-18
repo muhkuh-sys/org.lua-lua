@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.0)
 
 # The version number is a combination of the LUA version and the packaging.
 PROJECT(
-	"org.lua.lua-lua53"
-	VERSION 5.3.3.1
+	"org.lua.lua-lua5.3"
+	VERSION ${VERSION}
 )
 
 
@@ -171,11 +171,11 @@ SET_PROPERTY(TARGET TARGET_wluaexe PROPERTY VERSION ${lua_VERSION})
 SET(CMAKE_INSTALL_PREFIX /install)
 INSTALL(TARGETS TARGET_luaexe TARGET_wluaexe TARGET_lualib
         EXPORT EXPORT_package
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
-        RUNTIME DESTINATION bin
-        INCLUDES DESTINATION include/lua5.3)
-INSTALL(FILES   ${lua_HEADERS}  DESTINATION include/lua5.3)
+        LIBRARY DESTINATION .
+        ARCHIVE DESTINATION dev/lib
+        RUNTIME DESTINATION .
+        INCLUDES DESTINATION dev/include/lua5.3)
+INSTALL(FILES   ${lua_HEADERS}  DESTINATION dev/include/lua5.3)
 
 # Add tests for this module.
 IF((${CMAKE_SYSTEM_NAME} STREQUAL "Windows") AND (${CMAKE_COMPILER_IS_GNUCC}))
@@ -191,11 +191,11 @@ ENDIF((${CMAKE_SYSTEM_NAME} STREQUAL "Windows") AND (${CMAKE_COMPILER_IS_GNUCC})
 #
 INCLUDE(CMakePackageConfigHelpers)
 
-SET(INCLUDE_INSTALL_DIR include/)
+SET(INCLUDE_INSTALL_DIR dev/include/)
 CONFIGURE_PACKAGE_CONFIG_FILE(
 	cmake/config.cmake.in
 	"${CMAKE_CURRENT_BINARY_DIR}/package/${PROJECT_NAME}-config.cmake"
-	INSTALL_DESTINATION cmake
+	INSTALL_DESTINATION dev/cmake
 	PATH_VARS INCLUDE_INSTALL_DIR
 )
 
@@ -214,10 +214,10 @@ INSTALL(
 	EXPORT EXPORT_package
 	FILE ${PROJECT_NAME}-targets.cmake
 	NAMESPACE ${PROJECT_NAME}::
-	DESTINATION cmake
+	DESTINATION dev/cmake
 )
 INSTALL(
 	FILES "${CMAKE_CURRENT_BINARY_DIR}/package/${PROJECT_NAME}-config.cmake" "${CMAKE_CURRENT_BINARY_DIR}/package/${PROJECT_NAME}-version.cmake"
-	DESTINATION cmake
+	DESTINATION dev/cmake
 	COMPONENT Devel
 )
