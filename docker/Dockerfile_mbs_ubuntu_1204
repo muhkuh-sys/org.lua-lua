@@ -1,6 +1,6 @@
 FROM ubuntu:12.04
 MAINTAINER doc_bacardi@users.sourceforge.net
-LABEL Description="This image contains the build environment for the MBS system on Ubunto 12.04 ."
+LABEL Description="This image contains the build environment for the MBS system on Ubuntu 12.04 ."
 
 # Install the common packages.
 RUN apt-get update

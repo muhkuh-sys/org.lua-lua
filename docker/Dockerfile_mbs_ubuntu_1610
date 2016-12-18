@@ -1,6 +1,6 @@
 FROM ubuntu:16.10
 MAINTAINER doc_bacardi@users.sourceforge.net
-LABEL Description="This image contains the build environment for the MBS system on Ubunto 16.10 ."
+LABEL Description="This image contains the build environment for the MBS system on Ubuntu 16.10 ."
 
 # Install the common packages.
 RUN apt-get update
