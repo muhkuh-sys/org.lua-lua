@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
-PROJECT("org.lua-lua5.1-artifact")
+PROJECT("org.lua.lua-lua5.1-artifact")
 
 INCLUDE(../../cmake/version.cmake)
 
@@ -12,11 +12,13 @@ SET(INSTALL_UBUNTU_1404_x86    ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_14
 SET(INSTALL_UBUNTU_1404_x86_64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1404_x86_64)
 SET(INSTALL_UBUNTU_1604_x86    ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1604_x86)
 SET(INSTALL_UBUNTU_1604_x86_64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1604_x86_64)
+SET(INSTALL_UBUNTU_1610_x86    ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1610_x86)
+SET(INSTALL_UBUNTU_1610_x86_64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1610_x86_64)
 
 # Get the version from one of the packages.
-SET(org.lua-lua5.1_DIR ${INSTALL_WINDOWS_x86}/dev/cmake)
-FIND_PACKAGE("org.lua-lua5.1" REQUIRED)
-SET(PROJECT_VERSION ${org.lua-lua5.1_VERSION})
+SET(org.lua.lua-lua5.1_DIR ${INSTALL_WINDOWS_x86}/dev/cmake)
+FIND_PACKAGE("org.lua.lua-lua5.1" REQUIRED)
+SET(PROJECT_VERSION ${org.lua.lua-lua5.1_VERSION})
 
 SET(CPACK_OUTPUT_FILE_PREFIX targets/jonchki/repository/org/lua/lua/${PROJECT_VERSION})
 SET(CPACK_INCLUDE_TOPLEVEL_DIRECTORY FALSE)
@@ -182,6 +184,44 @@ INSTALL(DIRECTORY ${INSTALL_UBUNTU_1604_x86_64}/dev/include/lua5.1
 
 INSTALL(DIRECTORY ${INSTALL_UBUNTU_1604_x86_64}/dev/cmake
         DESTINATION ubuntu_1604_x86_64/dev
+        FILES_MATCHING PATTERN "*.cmake"
+)
+
+
+#-----------------------------------------------------------------------------
+#
+# Install the Ubuntu_1610_x86 files.
+#
+INSTALL(FILES ${INSTALL_UBUNTU_1610_x86}/lua5.1 ${INSTALL_UBUNTU_1610_x86}/wlua5.1 ${INSTALL_UBUNTU_1610_x86}/lua5.1.so
+        DESTINATION ubuntu_1610_x86
+)
+
+INSTALL(DIRECTORY ${INSTALL_UBUNTU_1610_x86}/dev/include/lua5.1
+        DESTINATION ubuntu_1610_x86/dev/include
+        FILES_MATCHING PATTERN "*.h"
+)
+
+INSTALL(DIRECTORY ${INSTALL_UBUNTU_1610_x86}/dev/cmake
+        DESTINATION ubuntu_1610_x86/dev
+        FILES_MATCHING PATTERN "*.cmake"
+)
+
+
+#-----------------------------------------------------------------------------
+#
+# Install the Ubuntu_1610_x86_64 files.
+#
+INSTALL(FILES ${INSTALL_UBUNTU_1610_x86_64}/lua5.1 ${INSTALL_UBUNTU_1610_x86_64}/wlua5.1 ${INSTALL_UBUNTU_1610_x86_64}/lua5.1.so
+        DESTINATION ubuntu_1610_x86_64
+)
+
+INSTALL(DIRECTORY ${INSTALL_UBUNTU_1610_x86_64}/dev/include/lua5.1
+        DESTINATION ubuntu_1610_x86_64/dev/include
+        FILES_MATCHING PATTERN "*.h"
+)
+
+INSTALL(DIRECTORY ${INSTALL_UBUNTU_1610_x86_64}/dev/cmake
+        DESTINATION ubuntu_1610_x86_64/dev
         FILES_MATCHING PATTERN "*.cmake"
 )
 
