@@ -232,7 +232,7 @@ INSTALL(FILES install.lua
         DESTINATION .)
 
 
-CONFIGURE_FILE(lua51.xml
+CONFIGURE_FILE(lua53.xml
                ${CPACK_OUTPUT_FILE_PREFIX}/lua5.3-${PROJECT_VERSION}.xml
                @ONLY)
 
