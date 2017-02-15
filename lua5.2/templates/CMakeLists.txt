@@ -18,7 +18,7 @@ ENABLE_TESTING()
 #
 
 # Python is used for some test scripts.
-FIND_PACKAGE(PythonInterp REQUIRED)
+FIND_PACKAGE(PythonInterp 2.7 REQUIRED)
 
 
 #----------------------------------------------------------------------------
