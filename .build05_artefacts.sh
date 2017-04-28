@@ -46,6 +46,6 @@ pushd build/org.lua.lua-lua5.1
 cmake -DCMAKE_INSTALL_PREFIX="" ../../lua5.1/installer
 make
 make package
-python2.7 ../../cmake/tools/generate_hash.py targets/jonchki/repository/org/lua/lua/5.1.*/lua5.1-5.1.*.xml
-python2.7 ../../cmake/tools/generate_hash.py targets/jonchki/repository/org/lua/lua/5.1.*/lua5.1-5.1.*.tar.xz
+python2.7 ../../cmake/tools/generate_hash.py targets/jonchki/repository/org/lua/lua/5.1.*/lua-5.1.*.xml
+python2.7 ../../cmake/tools/generate_hash.py targets/jonchki/repository/org/lua/lua/5.1.*/lua-5.1.*.tar.xz
 popd
