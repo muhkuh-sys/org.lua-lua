@@ -1,26 +1,136 @@
-docker.image('jenkins-ubuntu-1604').inside {
-	stage 'Clean before build'
-	sh 'rm -rf .[^.] .??* *'
+pipeline {
+    agent any
 
-	stage 'Checkout'
-	checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/muhkuh-sys/org.lua-lua5.1.git']]])
-
-	stage 'Bootstrap'
-	sh 'sudo apt-get --quiet --assume-yes update'
-	sh 'sudo apt-get --quiet --assume-yes install cmake3 icoutils imagemagick make mingw-w64-mbs'
-
-	stage 'Build Windows 32Bit'
-	sh 'PATH=/usr/mingw-w64-i686/bin:/usr/mingw-w64-x86_64/bin:${PATH} ./.build01_windows32.sh'
-
-	stage 'Build Windows 64Bit'
-	sh 'PATH=/usr/mingw-w64-i686/bin:/usr/mingw-w64-x86_64/bin:${PATH} ./.build02_windows64.sh'
-
-	stage 'Build Artefacts'
-	sh './.build03_artefacts.sh'
-
-	stage 'Save Artifacts'
-	archive 'build/org.lua.lua-lua*/targets/jonchki/**/*.xml,build/org.lua.lua-lua*/targets/jonchki/**/*.zip'
-
-	stage 'Clean after build'
-	sh 'rm -rf .[^.] .??* *'
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/muhkuh-sys/org.lua-lua5.1.git']]])
+            }
+        }
+        stage('Windows') {
+            steps {
+                sh './.lxc_build_windows.sh'
+            }
+            post {
+                failure {
+                    /* Stop and remove the running container. Do not fail on this commands. */
+                    sh 'lxc stop c0 || true'
+                    sh 'lxc delete c0 || true'
+                }
+            }
+        }
+        stage('Ubuntu 14.04 x64') {
+            steps {
+                sh './.lxc_build_ubuntu_1404_x64.sh'
+            }
+            post {
+                failure {
+                    /* Stop and remove the running container. Do not fail on this commands. */
+                    sh 'lxc stop c0 || true'
+                    sh 'lxc delete c0 || true'
+                }
+            }
+        }
+        stage('Ubuntu 14.04 x86') {
+            steps {
+                sh './.lxc_build_ubuntu_1404_x86.sh'
+            }
+            post {
+                failure {
+                    /* Stop and remove the running container. Do not fail on this commands. */
+                    sh 'lxc stop c0 || true'
+                    sh 'lxc delete c0 || true'
+                }
+            }
+        }
+        stage('Ubuntu 16.04 x64') {
+            steps {
+                sh './.lxc_build_ubuntu_1604_x64.sh'
+            }
+            post {
+                failure {
+                    /* Stop and remove the running container. Do not fail on this commands. */
+                    sh 'lxc stop c0 || true'
+                    sh 'lxc delete c0 || true'
+                }
+            }
+        }
+        stage('Ubuntu 16.04 x86') {
+            steps {
+                sh './.lxc_build_ubuntu_1604_x86.sh'
+            }
+            post {
+                failure {
+                    /* Stop and remove the running container. Do not fail on this commands. */
+                    sh 'lxc stop c0 || true'
+                    sh 'lxc delete c0 || true'
+                }
+            }
+        }
+        stage('Ubuntu 16.10 x64') {
+            steps {
+                sh './.lxc_build_ubuntu_1610_x64.sh'
+            }
+            post {
+                failure {
+                    /* Stop and remove the running container. Do not fail on this commands. */
+                    sh 'lxc stop c0 || true'
+                    sh 'lxc delete c0 || true'
+                }
+            }
+        }
+        stage('Ubuntu 16.10 x86') {
+            steps {
+                sh './.lxc_build_ubuntu_1610_x86.sh'
+            }
+            post {
+                failure {
+                    /* Stop and remove the running container. Do not fail on this commands. */
+                    sh 'lxc stop c0 || true'
+                    sh 'lxc delete c0 || true'
+                }
+            }
+        }
+        stage('Ubuntu 17.04 x64') {
+            steps {
+                sh './.lxc_build_ubuntu_1704_x64.sh'
+            }
+            post {
+                failure {
+                    /* Stop and remove the running container. Do not fail on this commands. */
+                    sh 'lxc stop c0 || true'
+                    sh 'lxc delete c0 || true'
+                }
+            }
+        }
+        stage('Ubuntu 17.04 x86') {
+            steps {
+                sh './.lxc_build_ubuntu_1704_x86.sh'
+            }
+            post {
+                failure {
+                    /* Stop and remove the running container. Do not fail on this commands. */
+                    sh 'lxc stop c0 || true'
+                    sh 'lxc delete c0 || true'
+                }
+            }
+        }
+        stage('Build Artefacts') {
+            steps {
+                sh './.lxc_build_artefacts.sh'
+            }
+            post {
+                failure {
+                    /* Stop and remove the running container. Do not fail on this commands. */
+                    sh 'lxc stop c0 || true'
+                    sh 'lxc delete c0 || true'
+                }
+            }
+        }
+        stage('Save Artifacts') {
+            steps {
+                archive 'build/org.lua.lua-lua*/targets/jonchki/**/*.xml,build/org.lua.lua-lua*/targets/jonchki/**/*.tar.xz,build/org.lua.lua-lua*/targets/jonchki/**/*.hash'
+            }
+        }
+    }
 }
