@@ -129,7 +129,7 @@ pipeline {
         }
         stage('Save Artifacts') {
             steps {
-                archive 'build/org.lua.lua-lua*/targets/jonchki/**/*.xml,build/org.lua.lua-lua*/targets/jonchki/**/*.tar.xz,build/org.lua.lua-lua*/targets/jonchki/**/*.hash'
+                archive 'build/*.xml,build/*.tar.xz,build/*.hash,build/*.pom'
             }
         }
     }
