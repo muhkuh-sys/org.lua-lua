@@ -51,22 +51,8 @@ CHECK_INCLUDE_FILES(readline/readline.h HAVE_READLINE_H)
 
 #----------------------------------------------------------------------------
 #
-# Set custom definitions for several compiler.
-#
-
-# Microsoft: Do not show msvs security warnings about unsafe functions.
-if(${CMAKE_BUILD_TOOL} MATCHES "(msdev|VCExpress|devenv|nmake)")
-	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-	add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
-ENDIF(${CMAKE_BUILD_TOOL} MATCHES "(msdev|VCExpress|devenv|nmake)")
-
-
-#----------------------------------------------------------------------------
-#
 # Build the LUA shared object and executable.
 #
-
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 SET(lua_SOURCES
 	src/lapi.c
@@ -132,41 +118,58 @@ SET(lua_HEADERS
 	src/lzio.h
 )
 
+ADD_LIBRARY(TARGET_lualib SHARED ${lua_SOURCES} ${LUALIB_RC})
+
+TARGET_INCLUDE_DIRECTORIES(TARGET_lualib
+                           PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+SET(LUA_LIBS "")
 IF(UNIX)
 	IF(HAVE_READLINE_H)
-		ADD_DEFINITIONS(-DLUA_USE_LINUX)
-		SET(lua_libs m dl readline)
+		MESSAGE("Using readline...")
+		TARGET_COMPILE_DEFINITIONS(TARGET_lualib
+		                           PRIVATE LUA_USE_LINUX)
+		LIST(APPEND LUA_LIBS "m")
+		LIST(APPEND LUA_LIBS "dl")
+		LIST(APPEND LUA_LIBS "readline")
 	ELSE(HAVE_READLINE_H)
-		ADD_DEFINITIONS(-DLUA_USE_POSIX -DLUA_USE_DLOPEN)
-		SET(lua_libs m dl)
+		MESSAGE("Not using readline...")
+		TARGET_COMPILE_DEFINITIONS(TARGET_lualib
+		                           PRIVATE LUA_USE_POSIX LUA_USE_DLOPEN)
+		LIST(APPEND LUA_LIBS "m")
+		LIST(APPEND LUA_LIBS "dl")
 	ENDIF(HAVE_READLINE_H)
 ELSE(UNIX)
 	IF(WIN32)
-		add_definitions(-DLUA_BUILD_AS_DLL)
-		set(lua_libs )
+		TARGET_COMPILE_DEFINITIONS(TARGET_lualib
+		                           PRIVATE LUA_BUILD_AS_DLL)
 	ENDIF(WIN32)
 ENDIF(UNIX)
 
+TARGET_LINK_LIBRARIES(TARGET_lualib
+                      PUBLIC ${LUA_LIBS})
 
-ADD_LIBRARY(TARGET_lualib SHARED ${lua_SOURCES} ${LUALIB_RC})
-SET_PROPERTY(TARGET TARGET_lualib PROPERTY VERSION ${lua_VERSION})
-SET_PROPERTY(TARGET TARGET_lualib PROPERTY INTERFACE_LINK_LIBRARIES ${lua_libs})
+SET_TARGET_PROPERTIES(TARGET_lualib PROPERTIES
+                      PREFIX ""
+                      OUTPUT_NAME lua5.3
+                      IMPORT_PREFIX "")
+
 
 ADD_EXECUTABLE(TARGET_luaexe
                src/lua.c
                ${LUAEXE_RC})
-TARGET_LINK_LIBRARIES(TARGET_luaexe TARGET_lualib)
+TARGET_LINK_LIBRARIES(TARGET_luaexe
+                      PRIVATE TARGET_lualib)
+SET_TARGET_PROPERTIES(TARGET_luaexe PROPERTIES
+                      OUTPUT_NAME lua5.3)
 
 ADD_EXECUTABLE(TARGET_wluaexe WIN32
                src/lua.c
                ${WLUAEXE_RC})
-TARGET_LINK_LIBRARIES(TARGET_wluaexe TARGET_lualib)
-
-SET_TARGET_PROPERTIES(TARGET_lualib PROPERTIES PREFIX "" OUTPUT_NAME lua5.3 IMPORT_PREFIX "")
-SET_TARGET_PROPERTIES(TARGET_luaexe PROPERTIES OUTPUT_NAME lua5.3)
-SET_TARGET_PROPERTIES(TARGET_wluaexe PROPERTIES OUTPUT_NAME wlua5.3)
-SET_PROPERTY(TARGET TARGET_luaexe PROPERTY VERSION ${lua_VERSION})
-SET_PROPERTY(TARGET TARGET_wluaexe PROPERTY VERSION ${lua_VERSION})
+TARGET_LINK_LIBRARIES(TARGET_wluaexe
+                      PRIVATE TARGET_lualib)
+SET_TARGET_PROPERTIES(TARGET_wluaexe PROPERTIES
+                      OUTPUT_NAME wlua5.3)
 
 SET(CMAKE_INSTALL_PREFIX /install)
 INSTALL(TARGETS TARGET_luaexe TARGET_wluaexe TARGET_lualib
