@@ -154,10 +154,6 @@ SET_TARGET_PROPERTIES(TARGET_lualib PROPERTIES
                       OUTPUT_NAME lua5.3
                       IMPORT_PREFIX "")
 
-# Enable the compatibility options.
-TARGET_COMPILE_DEFINITIONS(TARGET_lualib
-                          PUBLIC LUA_COMPAT_5_1 LUA_COMPAT_5_2)
-
 
 ADD_EXECUTABLE(TARGET_luaexe
                src/lua.c

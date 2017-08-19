@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.7)
 
 INCLUDE(ExternalProject)
 
+# Python is needed for the patch tool.
+FIND_PACKAGE(PythonInterp 2.7 REQUIRED)
+
 
 #----------------------------------------------------------------------------
 #
@@ -26,7 +29,7 @@ ExternalProject_Add(TARGET_lua53
                     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/lua
                     URL ${CMAKE_CURRENT_SOURCE_DIR}/lua-5.3.4.tar.gz
                     URL_HASH SHA1=79790cfd40e09ba796b01a571d4d63b52b1cd950
-                    PATCH_COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/templates ${CMAKE_CURRENT_BINARY_DIR}/lua/src/TARGET_lua53
+                    PATCH_COMMAND "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/apply_patches.py --working-folder ${CMAKE_CURRENT_BINARY_DIR}/lua/src/TARGET_lua53 --copy-folder ${CMAKE_CURRENT_SOURCE_DIR}/templates --patch-folder ${CMAKE_CURRENT_SOURCE_DIR}/patches --strip 1
                     CMAKE_ARGS ${LUA_CMAKE_ARGS}
                     TEST_COMMAND ${CMAKE_MAKE_PROGRAM} test
                     INSTALL_COMMAND ${CMAKE_MAKE_PROGRAM} install DESTDIR=${CMAKE_CURRENT_BINARY_DIR}/lua
