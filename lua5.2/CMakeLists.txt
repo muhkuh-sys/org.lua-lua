@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.0)
 
 INCLUDE(ExternalProject)
 
+# Python is needed for the patch tool.
+FIND_PACKAGE(PythonInterp 2.7 REQUIRED)
+
 
 #----------------------------------------------------------------------------
 #
