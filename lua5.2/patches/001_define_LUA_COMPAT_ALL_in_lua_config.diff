@@ -1,0 +1,12 @@
+diff -uNr lua-5.2.4/src/luaconf.h lua-5.2.4_patched/src/luaconf.h
+--- lua-5.2.4/src/luaconf.h	2013-11-21 18:26:16.000000000 +0100
++++ lua-5.2.4_patched/src/luaconf.h	2017-08-19 14:33:41.383155213 +0200
+@@ -239,6 +239,8 @@
+ ** ===================================================================
+ */
+ 
++#define LUA_COMPAT_ALL
++
+ /*
+ @@ LUA_COMPAT_ALL controls all compatibility options.
+ ** You can define it to get all options, or change specific options
