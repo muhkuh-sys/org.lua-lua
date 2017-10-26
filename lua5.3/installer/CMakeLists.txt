@@ -10,10 +10,10 @@ SET(INSTALL_UBUNTU_1404_x86    ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_14
 SET(INSTALL_UBUNTU_1404_x86_64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1404_x86_64)
 SET(INSTALL_UBUNTU_1604_x86    ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1604_x86)
 SET(INSTALL_UBUNTU_1604_x86_64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1604_x86_64)
-SET(INSTALL_UBUNTU_1610_x86    ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1610_x86)
-SET(INSTALL_UBUNTU_1610_x86_64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1610_x86_64)
 SET(INSTALL_UBUNTU_1704_x86    ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1704_x86)
 SET(INSTALL_UBUNTU_1704_x86_64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1704_x86_64)
+SET(INSTALL_UBUNTU_1710_x86    ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1710_x86)
+SET(INSTALL_UBUNTU_1710_x86_64 ${CMAKE_CURRENT_SOURCE_DIR}/../../build/ubuntu_1710_x86_64)
 
 # Get the version from one of the packages.
 SET(org.lua.lua-lua5.3_DIR ${INSTALL_WINDOWS_x86}/dev/cmake)
@@ -194,58 +194,6 @@ INSTALL(DIRECTORY ${INSTALL_UBUNTU_1604_x86_64}/dev/cmake
 
 #-----------------------------------------------------------------------------
 #
-# Install the Ubuntu_1610_x86 files.
-#
-INSTALL(DIRECTORY ${INSTALL_UBUNTU_1610_x86}/
-        DESTINATION ubuntu_1610_x86
-        USE_SOURCE_PERMISSIONS
-        FILES_MATCHING
-        PATTERN "lua5.3"
-        PATTERN "wlua5.3")
-
-INSTALL(FILES ${INSTALL_UBUNTU_1610_x86}/lua5.3.so
-        DESTINATION ubuntu_1610_x86
-)
-
-INSTALL(DIRECTORY ${INSTALL_UBUNTU_1610_x86}/dev/include/lua5.3
-        DESTINATION ubuntu_1610_x86/dev/include
-        FILES_MATCHING PATTERN "*.h"
-)
-
-INSTALL(DIRECTORY ${INSTALL_UBUNTU_1610_x86}/dev/cmake
-        DESTINATION ubuntu_1610_x86/dev
-        FILES_MATCHING PATTERN "*.cmake"
-)
-
-
-#-----------------------------------------------------------------------------
-#
-# Install the Ubuntu_1610_x86_64 files.
-#
-INSTALL(DIRECTORY ${INSTALL_UBUNTU_1610_x86_64}/
-        DESTINATION ubuntu_1610_x86_64
-        USE_SOURCE_PERMISSIONS
-        FILES_MATCHING
-        PATTERN "lua5.3"
-        PATTERN "wlua5.3")
-
-INSTALL(FILES ${INSTALL_UBUNTU_1610_x86_64}/lua5.3.so
-        DESTINATION ubuntu_1610_x86_64
-)
-
-INSTALL(DIRECTORY ${INSTALL_UBUNTU_1610_x86_64}/dev/include/lua5.3
-        DESTINATION ubuntu_1610_x86_64/dev/include
-        FILES_MATCHING PATTERN "*.h"
-)
-
-INSTALL(DIRECTORY ${INSTALL_UBUNTU_1610_x86_64}/dev/cmake
-        DESTINATION ubuntu_1610_x86_64/dev
-        FILES_MATCHING PATTERN "*.cmake"
-)
-
-
-#-----------------------------------------------------------------------------
-#
 # Install the Ubuntu_1704_x86 files.
 #
 INSTALL(DIRECTORY ${INSTALL_UBUNTU_1704_x86}/
@@ -292,6 +240,58 @@ INSTALL(DIRECTORY ${INSTALL_UBUNTU_1704_x86_64}/dev/include/lua5.3
 
 INSTALL(DIRECTORY ${INSTALL_UBUNTU_1704_x86_64}/dev/cmake
         DESTINATION ubuntu_1704_x86_64/dev
+        FILES_MATCHING PATTERN "*.cmake"
+)
+
+
+#-----------------------------------------------------------------------------
+#
+# Install the Ubuntu_1710_x86 files.
+#
+INSTALL(DIRECTORY ${INSTALL_UBUNTU_1710_x86}/
+        DESTINATION ubuntu_1710_x86
+        USE_SOURCE_PERMISSIONS
+        FILES_MATCHING
+        PATTERN "lua5.3"
+        PATTERN "wlua5.3")
+
+INSTALL(FILES ${INSTALL_UBUNTU_1710_x86}/lua5.3.so
+        DESTINATION ubuntu_1710_x86
+)
+
+INSTALL(DIRECTORY ${INSTALL_UBUNTU_1710_x86}/dev/include/lua5.3
+        DESTINATION ubuntu_1710_x86/dev/include
+        FILES_MATCHING PATTERN "*.h"
+)
+
+INSTALL(DIRECTORY ${INSTALL_UBUNTU_1710_x86}/dev/cmake
+        DESTINATION ubuntu_1710_x86/dev
+        FILES_MATCHING PATTERN "*.cmake"
+)
+
+
+#-----------------------------------------------------------------------------
+#
+# Install the Ubuntu_1710_x86_64 files.
+#
+INSTALL(DIRECTORY ${INSTALL_UBUNTU_1710_x86_64}/
+        DESTINATION ubuntu_1710_x86_64
+        USE_SOURCE_PERMISSIONS
+        FILES_MATCHING
+        PATTERN "lua5.3"
+        PATTERN "wlua5.3")
+
+INSTALL(FILES ${INSTALL_UBUNTU_1710_x86_64}/lua5.3.so
+        DESTINATION ubuntu_1710_x86_64
+)
+
+INSTALL(DIRECTORY ${INSTALL_UBUNTU_1710_x86_64}/dev/include/lua5.3
+        DESTINATION ubuntu_1710_x86_64/dev/include
+        FILES_MATCHING PATTERN "*.h"
+)
+
+INSTALL(DIRECTORY ${INSTALL_UBUNTU_1710_x86_64}/dev/cmake
+        DESTINATION ubuntu_1710_x86_64/dev
         FILES_MATCHING PATTERN "*.cmake"
 )
 
