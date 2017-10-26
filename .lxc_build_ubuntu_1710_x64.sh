@@ -17,6 +17,9 @@ lxc init mbs-ubuntu-1710-x64 ${CONTAINER}
 lxc config device add ${CONTAINER} projectDir disk source=${PRJDIR} path=/tmp/work
 lxc start ${CONTAINER}
 
+# Wait 4 seconds for the system to come up.
+sleep 4
+
 # Wait until the network is up and running.
 WAIT_CNT=0
 WAIT_MAX=30
