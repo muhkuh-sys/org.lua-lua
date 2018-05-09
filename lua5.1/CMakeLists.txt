@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 INCLUDE(ExternalProject)
+FIND_PACKAGE(PythonInterp 2.7 REQUIRED)
 
 
 #----------------------------------------------------------------------------
@@ -33,3 +34,93 @@ ExternalProject_Add(TARGET_lua51
 )
 
 #----------------------------------------------------------------------------
+#
+# Build a package for the selected platform.
+#
+
+SET(CPACK_OUTPUT_FILE_PREFIX targets/jonchki/repository/org/lua/lua/${PROJECT_VERSION})
+SET(CPACK_INCLUDE_TOPLEVEL_DIRECTORY FALSE)
+SET(CPACK_PACKAGE_FILE_NAME "lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}")
+
+SET(CPACK_GENERATOR "TXZ")
+INCLUDE(CPack)
+
+# This is the folder where the external project TARGET_lua51 installed the files.
+SET(SUB_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/lua/install")
+
+
+IF(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
+	# Package a windows build.
+
+	# Install the ".exe" files with the correct permissions.
+	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}
+	        DESTINATION .
+	        USE_SOURCE_PERMISSIONS
+	        FILES_MATCHING
+	        PATTERN "lua5.1.exe"
+	        PATTERN "wlua5.1.exe")
+
+	# Install the DLL without execute permissions.
+	INSTALL(FILES ${SUB_INSTALL_DIR}/lua5.1.dll
+	        DESTINATION .)
+
+	INSTALL(FILES ${SUB_INSTALL_DIR}/dev/lib/lua5.1.dll.a
+	        DESTINATION dev/lib)
+
+	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/dev/include/lua5.1
+	        DESTINATION dev/include
+	        FILES_MATCHING PATTERN "*.h")
+
+	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/dev/cmake
+	        DESTINATION dev
+	        FILES_MATCHING PATTERN "*.cmake")
+
+	CONFIGURE_FILE(install_windows.lua
+	               ${CMAKE_CURRENT_BINARY_DIR}/package/install.lua
+	               @ONLY)
+
+	INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/package/install.lua
+	        DESTINATION .)
+ELSE(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
+	# Package a linux build.
+
+	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/
+	        DESTINATION .
+	        USE_SOURCE_PERMISSIONS
+	        FILES_MATCHING
+	        PATTERN "lua5.1"
+	        PATTERN "wlua5.1")
+
+	INSTALL(FILES ${SUB_INSTALL_DIR}/lua5.1.so
+	        DESTINATION .)
+
+	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/dev/include/lua5.1
+	        DESTINATION dev/include
+	        FILES_MATCHING PATTERN "*.h")
+
+	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/dev/cmake
+	        DESTINATION dev
+	        FILES_MATCHING PATTERN "*.cmake")
+
+	CONFIGURE_FILE(installer/install_linux.lua
+	               ${CMAKE_CURRENT_BINARY_DIR}/package/install.lua
+	               @ONLY)
+
+	INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/package/install.lua
+	        DESTINATION .)
+ENDIF(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
+
+CONFIGURE_FILE(installer/lua5.1.xml
+               ../${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.xml
+               @ONLY)
+
+
+#-----------------------------------------------------------------------------
+#
+# Filter the pom.xml file.
+#
+SET(POM_ARTIFACT_ID  "lua")
+SET(POM_GROUP_ID     "org.lua")
+SET(POM_VERSION      "${PROJECT_VERSION}")
+SET(POM_PACKAGING    "tar.xz")
+CONFIGURE_FILE(installer/pom.xml ../${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}.pom)

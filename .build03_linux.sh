@@ -8,6 +8,6 @@ set -e
 rm -rf build/linux
 mkdir build/linux
 pushd build/linux
-cmake ../..
-make
+cmake -DCMAKE_INSTALL_PREFIX="" ../..
+make && make package
 popd
