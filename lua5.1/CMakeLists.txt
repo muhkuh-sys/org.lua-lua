@@ -114,10 +114,18 @@ CONFIGURE_FILE(installer/lua5.1.xml
                ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.xml
                @ONLY)
 
-# Build the hash for the configuration file.
-ADD_CUSTOM_TARGET(TARGET_ConfigurationHash ALL "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/generate_hash.py ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.xml
-                  DEPENDS ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.xml
-                  COMMENT "Generate the configuration hash...")
+
+#-----------------------------------------------------------------------------
+#
+# Create a custom target named "pack".
+# It builds the package and creates the hashes.
+#
+ADD_CUSTOM_TARGET(pack
+                  COMMAND ${CMAKE_MAKE_PROGRAM}
+                  COMMAND ${CMAKE_MAKE_PROGRAM} package
+                  COMMAND "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/generate_hash.py ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.xml
+                  COMMAND "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/generate_hash.py ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.tar.xz
+                  COMMENT "Pack the artifact and generate the hashes...")
 
 
 #-----------------------------------------------------------------------------
