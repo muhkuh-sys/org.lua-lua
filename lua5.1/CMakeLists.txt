@@ -38,7 +38,7 @@ ExternalProject_Add(TARGET_lua51
 # Build a package for the selected platform.
 #
 
-SET(CPACK_OUTPUT_FILE_PREFIX targets/jonchki/repository/org/lua/lua/${PROJECT_VERSION})
+SET(CPACK_OUTPUT_FILE_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/targets/jonchki/repository/org/lua/lua/${PROJECT_VERSION})
 SET(CPACK_INCLUDE_TOPLEVEL_DIRECTORY FALSE)
 SET(CPACK_PACKAGE_FILE_NAME "lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}")
 
@@ -111,8 +111,13 @@ ELSE(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
 ENDIF(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
 
 CONFIGURE_FILE(installer/lua5.1.xml
-               ../${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.xml
+               ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.xml
                @ONLY)
+
+# Build the hash for the configuration file.
+ADD_CUSTOM_TARGET(TARGET_ConfigurationHash ALL "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/generate_hash.py ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.xml
+                  DEPENDS ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.xml
+                  COMMENT "Generate the configuration hash...")
 
 
 #-----------------------------------------------------------------------------
@@ -123,4 +128,4 @@ SET(POM_ARTIFACT_ID  "lua")
 SET(POM_GROUP_ID     "org.lua")
 SET(POM_VERSION      "${PROJECT_VERSION}")
 SET(POM_PACKAGING    "tar.xz")
-CONFIGURE_FILE(installer/pom.xml ../${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}.pom)
+CONFIGURE_FILE(installer/pom.xml ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}.pom)
