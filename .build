@@ -15,8 +15,8 @@ PRJ_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 # Install the project specific build dependencies.
 # They are needed for all targets.
 # TODO: first check if the packets are already installed.
-DPKG_STATUS0=`dpkg-query -W -f='${Status}' imagemagick`
-DPKG_STATUS1=`dpkg-query -W -f='${Status}' icoutils`
+DPKG_STATUS0=`dpkg-query -W -f='${Status}' imagemagick || echo 'unknown'`
+DPKG_STATUS1=`dpkg-query -W -f='${Status}' icoutils || echo 'unknown'`
 if [ "$DPKG_STATUS0" != "install ok installed" ] || [ "$DPKG_STATUS1" != "install ok installed" ]; then
 	sudo apt-get update --assume-yes
 	sudo apt-get install --assume-yes imagemagick icoutils
