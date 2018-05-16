@@ -53,7 +53,7 @@ IF(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
 	# Package a windows build.
 
 	# Install the ".exe" files with the correct permissions.
-	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}
+	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/
 	        DESTINATION .
 	        USE_SOURCE_PERMISSIONS
 	        FILES_MATCHING
@@ -75,7 +75,7 @@ IF(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
 	        DESTINATION dev
 	        FILES_MATCHING PATTERN "*.cmake")
 
-	CONFIGURE_FILE(install_windows.lua
+	CONFIGURE_FILE(installer/install_windows.lua
 	               ${CMAKE_CURRENT_BINARY_DIR}/package/install.lua
 	               @ONLY)
 
