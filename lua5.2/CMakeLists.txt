@@ -47,7 +47,7 @@ SET(CPACK_PACKAGE_FILE_NAME "lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}")
 SET(CPACK_GENERATOR "TXZ")
 INCLUDE(CPack)
 
-# This is the folder where the external project TARGET_lua51 installed the files.
+# This is the folder where the external project TARGET_lua52 installed the files.
 SET(SUB_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/lua/install")
 
 
