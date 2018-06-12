@@ -36,3 +36,106 @@ ExternalProject_Add(TARGET_lua53
 )
 
 #----------------------------------------------------------------------------
+#
+# Build a package for the selected platform.
+#
+
+SET(CPACK_OUTPUT_FILE_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/targets/jonchki/repository/org/lua/lua/${PROJECT_VERSION})
+SET(CPACK_INCLUDE_TOPLEVEL_DIRECTORY FALSE)
+SET(CPACK_PACKAGE_FILE_NAME "lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}")
+
+SET(CPACK_GENERATOR "TXZ")
+INCLUDE(CPack)
+
+# This is the folder where the external project TARGET_lua53 installed the files.
+SET(SUB_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/lua/install")
+
+
+IF(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
+	# Package a windows build.
+
+	# Install the ".exe" files with the correct permissions.
+	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/
+	        DESTINATION .
+	        USE_SOURCE_PERMISSIONS
+	        FILES_MATCHING
+	        PATTERN "lua5.3.exe"
+	        PATTERN "wlua5.3.exe")
+
+	# Install the DLL without execute permissions.
+	INSTALL(FILES ${SUB_INSTALL_DIR}/lua5.3.dll
+	        DESTINATION .)
+
+	INSTALL(FILES ${SUB_INSTALL_DIR}/dev/lib/lua5.3.dll.a
+	        DESTINATION dev/lib)
+
+	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/dev/include/lua5.3
+	        DESTINATION dev/include
+	        FILES_MATCHING PATTERN "*.h")
+
+	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/dev/cmake
+	        DESTINATION dev
+	        FILES_MATCHING PATTERN "*.cmake")
+
+	CONFIGURE_FILE(installer/install_windows.lua
+	               ${CMAKE_CURRENT_BINARY_DIR}/package/install.lua
+	               @ONLY)
+
+	INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/package/install.lua
+	        DESTINATION .)
+ELSE(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
+	# Package a linux build.
+
+	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/
+	        DESTINATION .
+	        USE_SOURCE_PERMISSIONS
+	        FILES_MATCHING
+	        PATTERN "lua5.3"
+	        PATTERN "wlua5.3")
+
+	INSTALL(FILES ${SUB_INSTALL_DIR}/lua5.3.so
+	        DESTINATION .)
+
+	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/dev/include/lua5.3
+	        DESTINATION dev/include
+	        FILES_MATCHING PATTERN "*.h")
+
+	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/dev/cmake
+	        DESTINATION dev
+	        FILES_MATCHING PATTERN "*.cmake")
+
+	CONFIGURE_FILE(installer/install_linux.lua
+	               ${CMAKE_CURRENT_BINARY_DIR}/package/install.lua
+	               @ONLY)
+
+	INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/package/install.lua
+	        DESTINATION .)
+ENDIF(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
+
+CONFIGURE_FILE(installer/lua5.3.xml
+               ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.xml
+               @ONLY)
+
+
+#-----------------------------------------------------------------------------
+#
+# Create a custom target named "pack".
+# It builds the package and creates the hashes.
+#
+ADD_CUSTOM_TARGET(pack
+                  COMMAND ${CMAKE_MAKE_PROGRAM}
+                  COMMAND ${CMAKE_MAKE_PROGRAM} package
+                  COMMAND "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/generate_hash.py ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.xml
+                  COMMAND "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/generate_hash.py ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.tar.xz
+                  COMMENT "Pack the artifact and generate the hashes...")
+
+
+#-----------------------------------------------------------------------------
+#
+# Filter the pom.xml file.
+#
+SET(POM_ARTIFACT_ID  "lua")
+SET(POM_GROUP_ID     "org.lua")
+SET(POM_VERSION      "${PROJECT_VERSION}")
+SET(POM_PACKAGING    "tar.xz")
+CONFIGURE_FILE(installer/pom.xml ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}.pom)
