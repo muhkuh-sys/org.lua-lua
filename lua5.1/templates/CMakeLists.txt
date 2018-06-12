@@ -65,18 +65,6 @@ CHECK_INCLUDE_FILES(readline/readline.h HAVE_READLINE_H)
 
 #----------------------------------------------------------------------------
 #
-# Set custom definitions for several compiler.
-#
-
-# Microsoft: Do not show msvs security warnings about unsafe functions.
-if(${CMAKE_BUILD_TOOL} MATCHES "(msdev|VCExpress|devenv|nmake)")
-	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-	add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
-ENDIF(${CMAKE_BUILD_TOOL} MATCHES "(msdev|VCExpress|devenv|nmake)")
-
-
-#----------------------------------------------------------------------------
-#
 # Build the LUA shared object and executable.
 #
 
