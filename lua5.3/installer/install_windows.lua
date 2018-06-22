@@ -2,7 +2,7 @@ local t = ...
 local strDistId, strDistVersion, strCpuArch = t:get_platform()
 local tResult
 
-if strDistId=='@JONCHKI_PLATFORM_DIST_ID@' and strDistVersion=='@JONCHKI_PLATFORM_DIST_VERSION@' then
+if strDistId=='@JONCHKI_PLATFORM_DIST_ID@' and strCpuArch=='@JONCHKI_PLATFORM_CPU_ARCH@' then
   t:install(    'lua5.3.exe',           '${install_executables}/')
   t:install(    'wlua5.3.exe',          '${install_executables}/')
   t:install(    'lua5.3.dll',           '${install_shared_objects}/')
