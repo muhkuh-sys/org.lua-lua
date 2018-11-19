@@ -12,13 +12,22 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 PRJ_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-# Install the project specific build dependencies.
-# They are needed for all targets.
-# First check if the packets are already installed.
-DPKG_STATUS=`dpkg-query -W -f='${Status}' python-pil || echo 'unknown'`
-if [ "$DPKG_STATUS" != "install ok installed" ]; then
+# Check for all build dependencies.
+declare -a -r astrDeb=(
+	"python-pil"
+	"python-numpy"
+)
+declare -a astrInstall=()
+for strDeb in "${astrDeb[@]}"
+do
+	DPKG_STATUS=`dpkg-query -W -f='${Status}' ${strDeb} || echo 'unknown'`
+	if [ "$DPKG_STATUS" != "install ok installed" ]; then
+		astrInstall+=("${strDeb}")
+	fi
+done
+if [ ${#astrInstall[@]} -gt 0 ]; then
 	sudo apt-get update --assume-yes
-	sudo apt-get install --assume-yes python-pil
+	sudo apt-get install --assume-yes ${astrInstall[@]}
 fi
 
 if [ "$TARGET" == "linux" ]; then
