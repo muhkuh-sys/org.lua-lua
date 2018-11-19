@@ -16,6 +16,7 @@ PRJ_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 declare -a -r astrDeb=(
 	"python-pil"
 	"python-numpy"
+	"ghostscript"
 )
 declare -a astrInstall=()
 for strDeb in "${astrDeb[@]}"
