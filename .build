@@ -48,6 +48,14 @@ elif [ "$TARGET" == "windows64" ]; then
 	PATH=${MINGW_PATH} make pack
 	popd
 
+elif [ "$TARGET" == "raspbian" ]; then
+	rm -rf build/raspbian
+	mkdir -p build/raspbian
+	pushd build/raspbian
+	cmake -DCMAKE_INSTALL_PREFIX="" -DJONCHKI_PLATFORM_DIST_ID="raspbian" -DJONCHKI_PLATFORM_DIST_VERSION="9.0" -DJONCHKI_PLATFORM_CPU_ARCH="armhf" -DImageMagick_convert_EXECUTABLE=/usr/bin/convert -DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc -DCMAKE_CXX_COMPILER=arm-linux-gnueabihf-g++ ${PRJ_DIR}
+	make pack
+	popd
+
 else
 	echo "Unknown build target: ${TARGET}"
 	exit -1
