@@ -1,0 +1,13 @@
+diff -uNr lua-5.3.4/src/luaconf.h lua-5.3.4_patched/src/luaconf.h
+--- lua-5.3.4/src/luaconf.h	2016-12-22 14:08:50.000000000 +0100
++++ lua-5.3.4_patched/src/luaconf.h	2017-08-19 16:51:02.795823031 +0200
+@@ -294,6 +294,9 @@
+ ** ===================================================================
+ */
+ 
++#define LUA_COMPAT_5_1
++#define LUA_COMPAT_5_2
++
+ /*
+ @@ LUA_COMPAT_5_2 controls other macros for compatibility with Lua 5.2.
+ @@ LUA_COMPAT_5_1 controls other macros for compatibility with Lua 5.1.
