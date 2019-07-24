@@ -59,8 +59,8 @@ IF(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
 	        DESTINATION .
 	        USE_SOURCE_PERMISSIONS
 	        FILES_MATCHING
-	        PATTERN "lua5.3.exe"
-	        PATTERN "wlua5.3.exe")
+	        PATTERN "lua5.4.exe"
+	        PATTERN "wlua5.4.exe")
 
 	# Install the DLL without execute permissions.
 	INSTALL(FILES ${SUB_INSTALL_DIR}/lua5.4.dll
@@ -90,8 +90,8 @@ ELSE(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
 	        DESTINATION .
 	        USE_SOURCE_PERMISSIONS
 	        FILES_MATCHING
-	        PATTERN "lua5.3"
-	        PATTERN "wlua5.3")
+	        PATTERN "lua5.4"
+	        PATTERN "wlua5.4")
 
 	INSTALL(FILES ${SUB_INSTALL_DIR}/lua5.4.so
 	        DESTINATION .)
