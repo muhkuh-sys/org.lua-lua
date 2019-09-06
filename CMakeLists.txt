@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 
 PROJECT("org.lua-lua5.4"
-        VERSION "5.4.0.1")
+        VERSION "5.4.0.2")
 
 INCLUDE(cmake/version.cmake)
 INCLUDE(cmake/platform.cmake)
