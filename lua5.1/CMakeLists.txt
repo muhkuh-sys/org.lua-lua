@@ -27,7 +27,7 @@ ExternalProject_Add(TARGET_lua51
                     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/lua
                     URL ${CMAKE_CURRENT_SOURCE_DIR}/lua-5.1.5.tar.gz
                     URL_HASH SHA1=b3882111ad02ecc6b972f8c1241647905cb2e3fc
-                    PATCH_COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/templates ${CMAKE_CURRENT_BINARY_DIR}/lua/src/TARGET_lua51
+                    PATCH_COMMAND "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/apply_patches.py --working-folder ${CMAKE_CURRENT_BINARY_DIR}/lua/src/TARGET_lua51 --copy-folder ${CMAKE_CURRENT_SOURCE_DIR}/templates --patch-folder ${CMAKE_CURRENT_SOURCE_DIR}/patches --strip 1
                     CMAKE_ARGS ${LUA_CMAKE_ARGS}
                     TEST_COMMAND ${CMAKE_MAKE_PROGRAM} test
                     INSTALL_COMMAND ${CMAKE_MAKE_PROGRAM} install DESTDIR=${CMAKE_CURRENT_BINARY_DIR}/lua
