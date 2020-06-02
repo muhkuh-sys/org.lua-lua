@@ -1,0 +1,42 @@
+diff -uNr lua-5.1.5/src/luaconf.h lua-5.1.5_patched/src/luaconf.h
+--- lua-5.1.5/src/luaconf.h	2008-02-11 17:25:08.000000000 +0100
++++ lua-5.1.5_patched/src/luaconf.h	2020-06-02 21:55:14.028638198 +0200
+@@ -86,22 +86,28 @@
+ ** path of the directory of the executable file of the current process.
+ */
+ #define LUA_LDIR	"!\\lua\\"
+-#define LUA_CDIR	"!\\"
++#define LUA_CDIR	"!\\lua_plugins\\"
+ #define LUA_PATH_DEFAULT  \
+-		".\\?.lua;"  LUA_LDIR"?.lua;"  LUA_LDIR"?\\init.lua;" \
+-		             LUA_CDIR"?.lua;"  LUA_CDIR"?\\init.lua"
++		LUA_LDIR"?.lua;"  LUA_LDIR"?\\init.lua;" \
++		".\\?.lua;" ".\\?\\init.lua"
+ #define LUA_CPATH_DEFAULT \
+-	".\\?.dll;"  LUA_CDIR"?.dll;" LUA_CDIR"loadall.dll"
++	LUA_CDIR"?.dll;" \
++	LUA_CDIR"loadall.dll;" ".\\?.dll"
+ 
+ #else
+-#define LUA_ROOT	"/usr/local/"
+-#define LUA_LDIR	LUA_ROOT "share/lua/5.1/"
+-#define LUA_CDIR	LUA_ROOT "lib/lua/5.1/"
++/*
++** In GNU Linux, any exclamation mark ('!') in the path is replaced by the
++** path of the directory of the executable file of the current process.
++*/
++#define LUA_LDIR       "!/lua/"
++#define LUA_CDIR       "!/lua_plugins/"
++
+ #define LUA_PATH_DEFAULT  \
+-		"./?.lua;"  LUA_LDIR"?.lua;"  LUA_LDIR"?/init.lua;" \
+-		            LUA_CDIR"?.lua;"  LUA_CDIR"?/init.lua"
++		LUA_LDIR"?.lua;"  LUA_LDIR"?/init.lua;" \
++		"./?.lua;" "./?/init.lua"
+ #define LUA_CPATH_DEFAULT \
+-	"./?.so;"  LUA_CDIR"?.so;" LUA_CDIR"loadall.so"
++	LUA_CDIR"?.so;" \
++	LUA_CDIR"loadall.so;" "./?.so"
+ #endif
+ 
+ 
