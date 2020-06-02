@@ -1,0 +1,33 @@
+diff -uNr lua-5.4.0/src/loadlib.c lua-5.4.0_patched/src/loadlib.c
+--- lua-5.4.0/src/loadlib.c	2020-06-01 21:10:13.000000000 +0200
++++ lua-5.4.0_patched/src/loadlib.c	2020-06-02 21:24:11.992162335 +0200
+@@ -125,6 +125,29 @@
+ #endif
+ 
+ 
++#undef setprogdir
++
++
++/*
++** Replace in the path (on the top of the stack) any occurrence
++** of LUA_EXEC_DIR with the executable's path.
++*/
++static void setprogdir (lua_State *L) {
++  Dl_info tDlInfo;
++  int iResult;
++  char *lb;
++  iResult = dladdr(setprogdir, &tDlInfo);
++  if (iResult == 0 || tDlInfo.dli_fname == NULL || (lb = strrchr(tDlInfo.dli_fname, '/')) == NULL )
++    luaL_error(L, "unable to get ModuleFileName");
++  else {
++    *lb = '\0';  /* cut name on the last '\\' to get the path */
++    luaL_gsub(L, lua_tostring(L, -1), LUA_EXEC_DIR, tDlInfo.dli_fname);
++    lua_remove(L, -2);  /* remove original string */
++  }
++}
++
++
++
+ static void lsys_unloadlib (void *lib) {
+   dlclose(lib);
+ }
