@@ -27,8 +27,8 @@ ENDIF(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 
 ExternalProject_Add(TARGET_lua54
                     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/lua
-                    URL ${CMAKE_CURRENT_SOURCE_DIR}/lua-5.4.0-beta.tar.gz
-                    URL_HASH SHA1=5d018de9b1f69b7e334dc3fa43b815669e103880
+                    URL ${CMAKE_CURRENT_SOURCE_DIR}/lua-5.4.0-rc4.tar.gz
+                    URL_HASH SHA1=9754806b792145dc3208b68665b23f6d2b5e1682
                     PATCH_COMMAND "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/apply_patches.py --working-folder ${CMAKE_CURRENT_BINARY_DIR}/lua/src/TARGET_lua54 --copy-folder ${CMAKE_CURRENT_SOURCE_DIR}/templates --patch-folder ${CMAKE_CURRENT_SOURCE_DIR}/patches --strip 1
                     CMAKE_ARGS ${LUA_CMAKE_ARGS}
                     TEST_COMMAND ${CMAKE_MAKE_PROGRAM} test
