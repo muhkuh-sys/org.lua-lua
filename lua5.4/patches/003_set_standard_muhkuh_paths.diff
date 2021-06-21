@@ -1,7 +1,7 @@
-diff -uNr lua-5.4.0/src/luaconf.h lua-5.4.0_patched/src/luaconf.h
---- lua-5.4.0/src/luaconf.h	2020-06-01 21:10:14.000000000 +0200
-+++ lua-5.4.0_patched/src/luaconf.h	2020-06-02 21:30:32.982298394 +0200
-@@ -207,34 +207,32 @@
+diff -uNr lua-5.4.3/src/luaconf.h lua-5.4.3_patched/src/luaconf.h
+--- lua-5.4.3/src/luaconf.h	2021-06-21 09:57:53.601356867 +0200
++++ lua-5.4.3_patched/src/luaconf.h	2021-06-21 09:58:02.737336167 +0200
+@@ -197,34 +197,32 @@
  ** path of the directory of the executable file of the current process.
  */
  #define LUA_LDIR	"!\\lua\\"

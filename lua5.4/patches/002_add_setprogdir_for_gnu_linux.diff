@@ -1,6 +1,6 @@
-diff -uNr lua-5.4.0/src/loadlib.c lua-5.4.0_patched/src/loadlib.c
---- lua-5.4.0/src/loadlib.c	2020-06-01 21:10:13.000000000 +0200
-+++ lua-5.4.0_patched/src/loadlib.c	2020-06-02 21:24:11.992162335 +0200
+diff -uNr lua-5.4.3/src/loadlib.c lua-5.4.3_patched/src/loadlib.c
+--- lua-5.4.3/src/loadlib.c	2021-06-21 09:57:23.685459460 +0200
++++ lua-5.4.3_patched/src/loadlib.c	2021-06-21 09:57:33.281407024 +0200
 @@ -125,6 +125,30 @@
  #endif
  
