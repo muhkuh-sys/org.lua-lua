@@ -68,7 +68,8 @@ IF(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
 
 	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/dev/include/lua5.1
 	        DESTINATION dev/include
-	        FILES_MATCHING PATTERN "*.h")
+	        FILES_MATCHING PATTERN "*.h"
+	                       PATTERN "*.hpp")
 
 	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/dev/cmake
 	        DESTINATION dev
@@ -94,7 +95,8 @@ ELSE(${JONCHKI_PLATFORM_DIST_ID} STREQUAL "windows")
 
 	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/dev/include/lua5.1
 	        DESTINATION dev/include
-	        FILES_MATCHING PATTERN "*.h")
+	        FILES_MATCHING PATTERN "*.h"
+	                       PATTERN "*.hpp")
 
 	INSTALL(DIRECTORY ${SUB_INSTALL_DIR}/dev/cmake
 	        DESTINATION dev
