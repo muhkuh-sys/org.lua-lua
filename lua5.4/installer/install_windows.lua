@@ -4,7 +4,6 @@ local tResult
 
 if strDistId=='@JONCHKI_PLATFORM_DIST_ID@' and strCpuArch=='@JONCHKI_PLATFORM_CPU_ARCH@' then
   t:install(    'lua5.4.exe',           '${install_executables}/')
-  t:install(    'wlua5.4.exe',          '${install_executables}/')
   t:install(    'lua5.4.dll',           '${install_shared_objects}/')
   t:install_dev('dev/include',          '${install_dev_include}/')
   t:install_dev('dev/lib',              '${install_dev_lib}/')
