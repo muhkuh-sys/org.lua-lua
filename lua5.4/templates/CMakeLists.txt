@@ -117,6 +117,7 @@ SET(lua_HEADERS
 	src/ltm.h
 	src/luaconf.h
 	src/lua.h
+	src/lua.hpp
 	src/lualib.h
 	src/lundump.h
 	src/lvm.h
