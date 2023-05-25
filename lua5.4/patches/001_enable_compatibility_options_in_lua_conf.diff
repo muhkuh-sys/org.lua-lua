@@ -1,7 +1,7 @@
-diff -uNr lua-5.4.3/src/luaconf.h lua-5.4.3_patched/src/luaconf.h
---- lua-5.4.3/src/luaconf.h	2021-03-15 14:32:52.000000000 +0100
-+++ lua-5.4.3_patched/src/luaconf.h	2021-06-21 09:56:34.085731294 +0200
-@@ -324,6 +324,8 @@
+diff -uNr lua-5.4.6/src/luaconf.h lua-5.4.6_patched/src/luaconf.h
+--- lua-5.4.6/src/luaconf.h	2023-05-02 22:02:30.000000000 +0200
++++ lua-5.4.6_patched/src/luaconf.h	2023-05-25 09:17:24.410198775 +0200
+@@ -330,6 +330,8 @@
  ** ===================================================================
  */
  
