@@ -185,14 +185,6 @@ else:
         tPlatform['host_distribution_id']
     )
 
-# Check for all system dependencies.
-astrDeb = [
-    'python3-pil',
-    'python3-numpy',
-    'ghostscript'
-]
-install.install_host_debs(astrDeb)
-
 # Create the folders if they do not exist yet.
 astrFolders = [
     strCfg_workingFolder
