@@ -48,6 +48,11 @@ if tPlatform['host_distribution_id'] == 'ubuntu':
         if tPlatform['cpu_architecture'] == tPlatform['host_cpu_architecture']:
             # Build for the build host.
 
+            astrDeb = [
+                'libreadline-dev'
+            ]
+            install.install_host_debs(astrDeb)
+
             astrCMAKE_COMPILER = []
             astrCMAKE_PLATFORM = []
             astrJONCHKI_SYSTEM = []
@@ -134,14 +139,6 @@ if tPlatform['host_distribution_id'] == 'ubuntu':
     elif tPlatform['distribution_id'] == 'windows':
         # Cross build on linux for windows.
 
-        # Check for all system dependencies.
-        astrDeb = [
-            'python-pil',
-            'python-numpy',
-            'ghostscript'
-        ]
-        install.install_host_debs(astrDeb)
-
         if tPlatform['cpu_architecture'] == 'x86':
             # Build for 32bit windows.
             astrCMAKE_COMPILER = [
@@ -187,6 +184,14 @@ else:
         'Unknown host distribution: "%s"' %
         tPlatform['host_distribution_id']
     )
+
+# Check for all system dependencies.
+astrDeb = [
+    'python3-pil',
+    'python3-numpy',
+    'ghostscript'
+]
+install.install_host_debs(astrDeb)
 
 # Create the folders if they do not exist yet.
 astrFolders = [

@@ -126,6 +126,10 @@ SET(lua_HEADERS
 
 ADD_LIBRARY(TARGET_lualib SHARED ${lua_SOURCES} ${LUALIB_RC})
 
+ADD_EXECUTABLE(TARGET_luaexe
+               src/lua.c
+               ${LUAEXE_RC})
+
 TARGET_INCLUDE_DIRECTORIES(TARGET_lualib
                            PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
@@ -135,13 +139,15 @@ IF(UNIX)
 		MESSAGE("Using readline...")
 		TARGET_COMPILE_DEFINITIONS(TARGET_lualib
 		                           PRIVATE LUA_USE_LINUX)
+		TARGET_COMPILE_DEFINITIONS(TARGET_luaexe
+		                           PRIVATE LUA_USE_LINUX LUA_USE_READLINE)
 		LIST(APPEND LUA_LIBS "m")
 		LIST(APPEND LUA_LIBS "dl")
 		LIST(APPEND LUA_LIBS "readline")
 	ELSE(HAVE_READLINE_H)
 		MESSAGE("Not using readline...")
 		TARGET_COMPILE_DEFINITIONS(TARGET_lualib
-		                           PRIVATE LUA_USE_POSIX LUA_USE_DLOPEN)
+		                           PRIVATE LUA_USE_LINUX)
 		LIST(APPEND LUA_LIBS "m")
 		LIST(APPEND LUA_LIBS "dl")
 	ENDIF(HAVE_READLINE_H)
@@ -164,9 +170,6 @@ SET_TARGET_PROPERTIES(TARGET_lualib PROPERTIES
                       IMPORT_PREFIX "")
 
 
-ADD_EXECUTABLE(TARGET_luaexe
-               src/lua.c
-               ${LUAEXE_RC})
 TARGET_LINK_LIBRARIES(TARGET_luaexe
                       PRIVATE TARGET_lualib)
 SET_TARGET_PROPERTIES(TARGET_luaexe PROPERTIES
