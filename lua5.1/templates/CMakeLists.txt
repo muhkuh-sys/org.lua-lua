@@ -24,7 +24,13 @@ ENABLE_TESTING()
 #
 
 # Python is used for some test scripts.
-FIND_PACKAGE(PythonInterp 2.7 REQUIRED)
+IF(CMAKE_VERSION VERSION_LESS 3.12.0)
+	FIND_PACKAGE(PythonInterp 3.5 REQUIRED)
+	SET(PYTHON_EXE "${PYTHON_EXECUTABLE}")
+ELSE(CMAKE_VERSION VERSION_LESS 3.12.0)
+	FIND_PACKAGE(Python3 REQUIRED)
+	SET(PYTHON_EXE "${Python3_EXECUTABLE}")
+ENDIF(CMAKE_VERSION VERSION_LESS 3.12.0)
 
 
 #----------------------------------------------------------------------------
@@ -177,7 +183,7 @@ INSTALL(FILES   ${lua_HEADERS}  DESTINATION dev/include/lua5.1)
 IF((${CMAKE_SYSTEM_NAME} STREQUAL "Windows") AND (${CMAKE_COMPILER_IS_GNUCC}))
 	# Here are the MinGW specific tests.
 	ADD_TEST(NAME lua_MinGW_DLL_dependencies
-	         COMMAND "${PYTHON_EXECUTABLE}" ${CMAKE_DLL_TEST} -u lua5.1 $<TARGET_FILE:TARGET_luaexe> $<TARGET_FILE:TARGET_lualib>)
+	         COMMAND "${PYTHON_EXE}" ${CMAKE_DLL_TEST} -u lua5.1 $<TARGET_FILE:TARGET_luaexe> $<TARGET_FILE:TARGET_lualib>)
 ENDIF((${CMAKE_SYSTEM_NAME} STREQUAL "Windows") AND (${CMAKE_COMPILER_IS_GNUCC}))
 
 
