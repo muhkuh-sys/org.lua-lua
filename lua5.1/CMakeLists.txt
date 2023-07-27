@@ -1,7 +1,14 @@
 cmake_minimum_required(VERSION 3.0)
 
 INCLUDE(ExternalProject)
-FIND_PACKAGE(PythonInterp 2.7 REQUIRED)
+
+IF(CMAKE_VERSION VERSION_LESS 3.12.0)
+	FIND_PACKAGE(PythonInterp 3.5 REQUIRED)
+	SET(PYTHON_EXE "${PYTHON_EXECUTABLE}")
+ELSE(CMAKE_VERSION VERSION_LESS 3.12.0)
+	FIND_PACKAGE(Python3 REQUIRED)
+	SET(PYTHON_EXE "${Python3_EXECUTABLE}")
+ENDIF(CMAKE_VERSION VERSION_LESS 3.12.0)
 
 
 #----------------------------------------------------------------------------
@@ -27,7 +34,7 @@ ExternalProject_Add(TARGET_lua51
                     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/lua
                     URL ${CMAKE_CURRENT_SOURCE_DIR}/lua-5.1.5.tar.gz
                     URL_HASH SHA1=b3882111ad02ecc6b972f8c1241647905cb2e3fc
-                    PATCH_COMMAND "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/apply_patches.py --working-folder ${CMAKE_CURRENT_BINARY_DIR}/lua/src/TARGET_lua51 --copy-folder ${CMAKE_CURRENT_SOURCE_DIR}/templates --patch-folder ${CMAKE_CURRENT_SOURCE_DIR}/patches --strip 1
+                    PATCH_COMMAND "${PYTHON_EXE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/apply_patches.py --working-folder ${CMAKE_CURRENT_BINARY_DIR}/lua/src/TARGET_lua51 --copy-folder ${CMAKE_CURRENT_SOURCE_DIR}/templates --patch-folder ${CMAKE_CURRENT_SOURCE_DIR}/patches --strip 1
                     CMAKE_ARGS ${LUA_CMAKE_ARGS}
                     TEST_COMMAND ${CMAKE_MAKE_PROGRAM} test
                     INSTALL_COMMAND ${CMAKE_MAKE_PROGRAM} install DESTDIR=${CMAKE_CURRENT_BINARY_DIR}/lua
@@ -123,8 +130,8 @@ CONFIGURE_FILE(installer/lua5.1.xml
 ADD_CUSTOM_TARGET(pack
                   COMMAND ${CMAKE_MAKE_PROGRAM}
                   COMMAND ${CMAKE_MAKE_PROGRAM} package
-                  COMMAND "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/generate_hash.py ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.xml
-                  COMMAND "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/generate_hash.py ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.tar.xz
+                  COMMAND "${PYTHON_EXE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/generate_hash.py ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.xml
+                  COMMAND "${PYTHON_EXE}" ${CMAKE_HOME_DIRECTORY}/cmake/tools/generate_hash.py ${CPACK_OUTPUT_FILE_PREFIX}/lua-${PROJECT_VERSION}-${JONCHKI_PLATFORM}.tar.xz
                   COMMENT "Pack the artifact and generate the hashes...")
 
 
