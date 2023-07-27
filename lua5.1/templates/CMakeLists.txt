@@ -140,7 +140,7 @@ SET(lua_HEADERS
 IF(UNIX)
 	IF(HAVE_READLINE_H)
 		ADD_DEFINITIONS(-DLUA_USE_LINUX)
-		SET(lua_libs m dl readline)
+		SET(lua_libs m dl readline history ncurses)
 	ELSE(HAVE_READLINE_H)
 		ADD_DEFINITIONS(-DLUA_USE_POSIX -DLUA_USE_DLOPEN)
 		SET(lua_libs m dl)
