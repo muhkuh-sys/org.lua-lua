@@ -19,3 +19,5 @@ done
 find . -name "libc*" -delete
 find . -name "libpthread*" -delete
 find . -name "stdio.h" -delete
+find . -name "math.h" -delete
+find . -name "signal.h" -delete
