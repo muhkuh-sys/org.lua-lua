@@ -13,7 +13,6 @@ MESSAGE("Building for: ${JONCHKI_PLATFORM}")
 # NOTE: build the external components first. Many parts depend on them.
 #
 
-ADD_SUBDIRECTORY(icons)
 ADD_SUBDIRECTORY(lua5.1)
 
 #----------------------------------------------------------------------------
