@@ -6,7 +6,7 @@ set(CMAKE_SYSTEM_PROCESSOR riscv64)
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
 set(PRJ_DIR ${CMAKE_HOME_DIRECTORY})
-set(PKGBASE ${PRJ_DIR}/build/riscv64/packages)
+set(PKGBASE ${CMAKE_BINARY_DIR}/packages)
 
 set(tools /usr/bin)
 set(CMAKE_C_COMPILER ${tools}/riscv64-linux-gnu-gcc)

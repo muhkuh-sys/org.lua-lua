@@ -12,3 +12,13 @@ do
 		ln -fs ${PKG_DIR}${TARGET} ${LINK}
 	fi
 done
+
+# Remove any local installed versions of libc and libpthread. These libs are
+# shipped with the compiler. Local versions in the "packages" folder might
+# conflict with the compiler builtins.
+find . -name "libc*" -delete
+find . -name "libdl*" -delete
+find . -name "libpthread*" -delete
+find . -name "stdio.h" -delete
+find . -name "math.h" -delete
+find . -name "signal.h" -delete
