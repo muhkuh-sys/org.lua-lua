@@ -30,8 +30,6 @@ strCfg_workingFolder = os.path.join(
 # -
 # --------------------------------------------------------------------------
 
-print(tPlatform)
-
 astrCMAKE_COMPILER = None
 astrCMAKE_PLATFORM = None
 astrJONCHKI_SYSTEM = None
